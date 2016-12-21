@@ -22,8 +22,8 @@ find_mvn <- function() {
     mvn_dirs <- dir(standard_path, full.names=TRUE)
     
   } else if (is_unix()) {
-    mvn_dirs <- system("which mvn", intern=TRUE)
-    if (grepl("^which: no mvn", mvn_dirs)) {
+    mvn_dirs <- suppressWarnings(system("which mvn", intern=TRUE, ignore.stderr=TRUE))
+    if (length(mvn_dirs)==0 || grepl("^which: no mvn", mvn_dirs)) {
       standard_path <- "/usr/depot"
       mvn_dirs <- dir(standard_path, full.names=TRUE)
     }
@@ -74,8 +74,8 @@ set_java_home <- function(java_home) {
     java_dirs <- dir(standard_path, full.names=TRUE)
     
   } else if (is_unix()) {
-    java_dirs <- system("which java", intern=TRUE)
-    if (grepl("^which: no java", java_dirs)) {
+    java_dirs <- suppressWarnings(system("which java", intern=TRUE, ignore.stderr=TRUE))
+    if (length(java_dirs)==0 || grepl("^which: no java", java_dirs)) {
       standard_path <- "/usr/bin"
       java_dirs <- dir(standard_path, full.names=TRUE)
     }

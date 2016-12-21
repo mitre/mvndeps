@@ -36,7 +36,7 @@ download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home) 
 #' @param quiet Logical. If \code{TRUE} warnings about missing dependencies will be suppressed.
 #' @seealso download_dependency
 #' @export
-find_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
+find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
   
   set_java_home(java_home)
 
@@ -60,6 +60,34 @@ find_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, quie
   return(path)
 }
 
+#' @rdname find_dependency_path
+#' @export
+find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
+ 
+  # put dependency together
+  if (!missing(group))
+    dep <- paste0(group, ":", dep)
+  
+  if (!missing(version))
+    dep <- paste0(dep, ":", version)
+  
+  # find path
+  path <- find_dependency_path(dep=dep, mvn=mvn, java_home=java_home, quiet=quiet)
+  
+  # get jar name by pealing off group
+  dep_parts <- unlist(strsplit(dep, ":"))
+  if (length(dep_parts) != 3)
+    stop(paste0("Dependency (", dep, ") does not follow expected group:name:version pattern."))
+  jar_name <- paste0(dep_parts[2], "-", dep_parts[3], ".jar")
+  jar_path <- file.path(path, jar_name)
+  
+  # find jar
+  if (!file.exists(jar_path))
+    stop(paste0("The jar '", jar_name, "' was not found in the expected location '", path, "'."))
+  
+  return(jar_path)
+}
+
 #' Have maven get a dependency
 #' 
 #' This function wraps \code{\link{download_dependency}} and \code{link{find_dependency}}. 
@@ -69,12 +97,12 @@ find_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, quie
 #' 
 #' @inheritParams download_dependency
 #' @export
-get_dependency <- function(dep, group, version, mvn=find_mvn(), java_home) {
-  path <- find_dependency(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=TRUE)
+get_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home) {
+  path <- find_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=TRUE)
   if (!is.null(path))
     return(path)
   
   download_dependency(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home)
-  path <- find_dependency(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=FALSE)
+  path <- find_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=FALSE)
   return(path)
 }

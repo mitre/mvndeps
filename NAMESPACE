@@ -2,8 +2,9 @@
 
 export(clear_java_home)
 export(download_dependency)
-export(find_dependency)
+export(find_dependency_jar)
+export(find_dependency_path)
 export(find_local_mvn_repo)
 export(find_mvn)
-export(get_dependency)
+export(get_dependency_path)
 export(set_java_home)
