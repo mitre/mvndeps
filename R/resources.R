@@ -43,7 +43,7 @@ find_mvn <- function() {
 #' Set/clear JAVA_HOME
 #' 
 #' Maven needs to know where java is to run. Setting the JAVA_HOME
-#' environment variable can however cause issues with \code{rJava`}. If
+#' environment variable can however cause issues with \code{rJava}. If
 #' issues do arise use \code{clear_java_home} after your dependencies are
 #' resolved.
 #' 
