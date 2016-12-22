@@ -86,7 +86,7 @@ set_java_home <- function(java_home) {
   }
   
   java_dirs <- java_dirs[grepl("^jre|java", basename(java_dirs))]
-  if (length(mvn_dirs)==0) {
+  if (length(java_dirs)==0) {
     warning("Unable to find java. Try setting options(.java.home=...)")
     return(FALSE)
   }
