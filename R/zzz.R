@@ -48,6 +48,12 @@ is_unsupported_os <- function() {
   return(!(is_windows() | is_unix()))
 }
 
+#' The mvndeps Package
+#' 
+#' A package to interface with maven in handy ways.
+#' 
+#' @section Inteded Use:
+#' 
 #' This package is intendend for use by other packages. The idea is to absolve other packages from
 #' having to manage java dependencies (i.e., include compiled jars in repositories) if the following
 #' constraints can be met:

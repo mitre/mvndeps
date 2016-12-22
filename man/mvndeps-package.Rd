@@ -4,10 +4,17 @@
 \name{mvndeps-package}
 \alias{mvndeps}
 \alias{mvndeps-package}
-\title{This package is intendend for use by other packages. The idea is to absolve other packages from
-having to manage java dependencies (i.e., include compiled jars in repositories) if the following
-constraints can be met:}
+\title{The mvndeps Package}
 \description{
+A package to interface with maven in handy ways.
+}
+\section{Inteded Use}{
+
+
+This package is intendend for use by other packages. The idea is to absolve other packages from
+having to manage java dependencies (i.e., include compiled jars in repositories) if the following
+constraints can be met:
+
 \itemize{
   \item{A reasonable expectation may be made that any user of the package will have maven installed
         and configured on their system. This package does not ship with maven, but uses maven system

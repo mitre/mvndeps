@@ -1,7 +1,7 @@
 #' Find maven on the system
 #' 
 #' The package uses maven to resolve dependencies. It does not come packaged with
-#' maven. As such it is required thta the user independently install maven. This
+#' maven. As such it is required that the user independently install maven. This
 #' function will try to find the maven executable assuming that maven is already
 #' installed.
 #' 

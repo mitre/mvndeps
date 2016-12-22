@@ -34,7 +34,7 @@ download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home) 
 #'  
 #' @inheritParams download_dependency
 #' @param quiet Logical. If \code{TRUE} warnings about missing dependencies will be suppressed.
-#' @seealso download_dependency
+#' @seealso \link{download_dependency}
 #' @export
 find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
   
@@ -62,7 +62,7 @@ find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home,
 
 #' @rdname find_dependency_path
 #' @export
-find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
+find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home) {
  
   # put dependency together
   if (!missing(group))
@@ -90,7 +90,7 @@ find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, 
 
 #' Have maven get a dependency
 #' 
-#' This function wraps \code{\link{download_dependency}} and \code{link{find_dependency}}. 
+#' This function wraps \code{\link{download_dependency}} and \code{\link{find_dependency}}. 
 #' It will look to see if the dependency is already available in the local maven repository.
 #' If it is it will return the path. If it isn't then it will download the dependency and then
 #' return the path.
@@ -105,4 +105,14 @@ get_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home) 
   download_dependency(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home)
   path <- find_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=FALSE)
   return(path)
+}
+
+#' @rdname get_dependency_path
+#' @export
+get_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home) {
+  # force download if needed
+  path <- get_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home)
+  
+  # get jar
+  return(get_dependency_jar(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home))
 }

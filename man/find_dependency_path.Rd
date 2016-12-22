@@ -8,8 +8,7 @@
 find_dependency_path(dep, group, version, mvn = find_mvn(), java_home,
   quiet = FALSE)
 
-find_dependency_jar(dep, group, version, mvn = find_mvn(), java_home,
-  quiet = FALSE)
+find_dependency_jar(dep, group, version, mvn = find_mvn(), java_home)
 }
 \arguments{
 \item{dep}{Character. The dependency name. This could be the entire name (e.g.,
@@ -33,6 +32,6 @@ if the dependency has not yet been downloaded (e.g., via \code{\link{download_de
 then the return value will be \code{NULL}.
 }
 \seealso{
-download_dependency
+\link{download_dependency}
 }
 
