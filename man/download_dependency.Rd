@@ -17,8 +17,8 @@ it can be just the dependency name (i.e., the part in the middle of the above ex
 
 \item{mvn}{Character. The path the the maven installation.}
 
-\item{m2}{Character. Path to local maven repository. If no input is provided a standard
-location will be guessed at (platform dependent).}
+\item{java_home}{Character. Path to java. If not provided the standard install paths
+(platform dependent) will be checked.}
 }
 \description{
 This function will use the maven dependency get funtionality to download a (java)

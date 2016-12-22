@@ -10,8 +10,8 @@
 #' @param group Character. The maven artifact group name.
 #' @param version Character. The desired version of the dependency.
 #' @param mvn Character. The path the the maven installation.
-#' @param m2 Character. Path to local maven repository. If no input is provided a standard
-#'   location will be guessed at (platform dependent).
+#' @param java_home Character. Path to java. If not provided the standard install paths
+#'   (platform dependent) will be checked.
 #' @export
 download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home) {
   

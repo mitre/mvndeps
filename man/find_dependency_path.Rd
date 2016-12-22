@@ -22,6 +22,9 @@ it can be just the dependency name (i.e., the part in the middle of the above ex
 
 \item{mvn}{Character. The path the the maven installation.}
 
+\item{java_home}{Character. Path to java. If not provided the standard install paths
+(platform dependent) will be checked.}
+
 \item{quiet}{Logical. If \code{TRUE} warnings about missing dependencies will be suppressed.}
 }
 \description{

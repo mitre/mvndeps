@@ -16,6 +16,9 @@ it can be just the dependency name (i.e., the part in the middle of the above ex
 \item{version}{Character. The desired version of the dependency.}
 
 \item{mvn}{Character. The path the the maven installation.}
+
+\item{java_home}{Character. Path to java. If not provided the standard install paths
+(platform dependent) will be checked.}
 }
 \description{
 This function wraps \code{\link{download_dependency}} and \code{link{find_dependency}}. 
