@@ -12,18 +12,39 @@
 #' @param mvn Character. The path the the maven installation.
 #' @param java_home Character. Path to java. If not provided the standard install paths
 #'   (platform dependent) will be checked.
+#' @param transitive Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.
 #' @export
-download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home) {
-  
+download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, transitive = TRUE) {
   set_java_home(java_home)
+  system(.download_dependency_cmd(dep, group, version, mvn, java_home, transitive))
+}
 
+#' Build the command to have maven download a dependency (package-private)
+#' 
+#' This function will build a system command using the maven dependency get funtionality to download a (java)
+#' dependency. 
+#'  
+#' @param dep Character. The dependency name. This could be the entire name (e.g.,
+#'   group:dependency:version) in which case the other inputs may be omitted. Otherwise
+#'   it can be just the dependency name (i.e., the part in the middle of the above example).
+#' @param group Character. The maven artifact group name.
+#' @param version Character. The desired version of the dependency.
+#' @param mvn Character. The path the the maven installation.
+#' @param java_home Character. Path to java. If not provided the standard install paths
+#'   (platform dependent) will be checked.
+#' @param transitive Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.
+#' 
+#' @keywords internal
+.download_dependency_cmd <- function(dep, group, version, mvn, java_home, transitive = TRUE) {
+  
+>>>>>>> c601998... Allows non-transitive artifact download
   if (!missing(group))
     dep <- paste0(group, ":", dep)
   
   if (!missing(version))
     dep <- paste0(dep, ":", version)
   
-  system(paste0(mvn, " dependency:get -Dartifact=", dep))
+  paste0(mvn, " dependency:get -Dartifact=", dep, " -Dtransitive=", ifelse(transitive,'true','false'))
 }
 
 #' Have maven find a dependency

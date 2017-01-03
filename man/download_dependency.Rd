@@ -4,7 +4,8 @@
 \alias{download_dependency}
 \title{Have maven download a dependency}
 \usage{
-download_dependency(dep, group, version, mvn = find_mvn(), java_home)
+download_dependency(dep, group, version, mvn = find_mvn(), java_home,
+  transitive = TRUE)
 }
 \arguments{
 \item{dep}{Character. The dependency name. This could be the entire name (e.g.,
@@ -19,6 +20,8 @@ it can be just the dependency name (i.e., the part in the middle of the above ex
 
 \item{java_home}{Character. Path to java. If not provided the standard install paths
 (platform dependent) will be checked.}
+
+\item{transitive}{Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.}
 }
 \description{
 This function will use the maven dependency get funtionality to download a (java)
