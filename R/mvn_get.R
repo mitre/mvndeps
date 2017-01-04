@@ -24,15 +24,7 @@ download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, 
 #' This function will build a system command using the maven dependency get funtionality to download a (java)
 #' dependency. 
 #'  
-#' @param dep Character. The dependency name. This could be the entire name (e.g.,
-#'   group:dependency:version) in which case the other inputs may be omitted. Otherwise
-#'   it can be just the dependency name (i.e., the part in the middle of the above example).
-#' @param group Character. The maven artifact group name.
-#' @param version Character. The desired version of the dependency.
-#' @param mvn Character. The path the the maven installation.
-#' @param java_home Character. Path to java. If not provided the standard install paths
-#'   (platform dependent) will be checked.
-#' @param transitive Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.
+#' @inheritParams download_dependency
 #' 
 #' @keywords internal
 .download_dependency_cmd <- function(dep, group, version, mvn, java_home, transitive = TRUE) {
@@ -44,7 +36,7 @@ download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, 
   if (!missing(version))
     dep <- paste0(dep, ":", version)
   
-  paste0(mvn, " dependency:get -Dartifact=", dep, " -Dtransitive=", ifelse(transitive,'true','false'))
+  return(paste0(mvn, " dependency:get -Dartifact=", dep, " -Dtransitive=", ifelse(transitive,'true','false')))
 }
 
 #' Have maven find a dependency
