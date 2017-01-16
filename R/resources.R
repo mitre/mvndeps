@@ -38,8 +38,10 @@ find_mvn <- function() {
   mvn <- file.path(mvn_dir, "bin", "mvn")
   set_var(".mvn.executable", mvn)
   
-  if (!is_java_available())
-    warning(paste("Maven is found, but java is unavailable. See ?set_java_home for help."))
+  if (!is_java_available()) {
+    msg <- "Maven is found, but java is unavailable. See ?set_java_home for help."
+    stop(msg)
+  }  
   
   return(mvn)
 }
