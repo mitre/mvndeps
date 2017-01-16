@@ -15,8 +15,11 @@
 #' @param transitive Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.
 #' @export
 download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, transitive = TRUE) {
-  set_java_home(java_home)
-  system(.download_dependency_cmd(dep, group, version, mvn, java_home, transitive))
+
+  if (!missing(java_home))
+    set_java_home(java_home)
+
+  system(.download_dependency_cmd(dep, group, version, mvn, transitive))
 }
 
 #' Build the command to have maven download a dependency (package-private)
@@ -27,9 +30,8 @@ download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, 
 #' @inheritParams download_dependency
 #' 
 #' @keywords internal
-.download_dependency_cmd <- function(dep, group, version, mvn, java_home, transitive = TRUE) {
+.download_dependency_cmd <- function(dep, group, version, mvn, transitive = TRUE) {
   
->>>>>>> c601998... Allows non-transitive artifact download
   if (!missing(group))
     dep <- paste0(group, ":", dep)
   
@@ -50,8 +52,9 @@ download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, 
 #' @seealso \link{download_dependency}
 #' @export
 find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
-  
-  set_java_home(java_home)
+
+  if (!missing(java_home))
+    set_java_home(java_home)
 
   # put dependency together
   if (!missing(group))
@@ -75,7 +78,7 @@ find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home,
 
 #' @rdname find_dependency_path
 #' @export
-find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home) {
+find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
  
   # put dependency together
   if (!missing(group))
