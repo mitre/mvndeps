@@ -89,6 +89,8 @@ find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, 
   
   # find path
   path <- find_dependency_path(dep=dep, mvn=mvn, java_home=java_home, quiet=quiet)
+  if (is.null(path))
+    return(NULL)
   
   # get jar name by pealing off group
   dep_parts <- unlist(strsplit(dep, ":"))
@@ -118,6 +120,7 @@ get_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home) 
   if (!is.null(path))
     return(path)
   
+  # dependency not found in local repo, try downloading it
   download_dependency(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home)
   path <- find_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=FALSE)
   return(path)
@@ -130,5 +133,5 @@ get_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home) {
   path <- get_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home)
   
   # get jar
-  return(get_dependency_jar(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home))
+  return(find_dependency_jar(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home))
 }
