@@ -37,69 +37,11 @@ find_mvn <- function() {
   mvn_dir <- sort(mvn_dirs, decreasing=TRUE)[1]
   mvn <- file.path(mvn_dir, "bin", "mvn")
   set_var(".mvn.executable", mvn)
+  
+  if (!is_java_available())
+    warning(paste("Maven is found, but java is unavailable. See ?set_java_home for help."))
+  
   return(mvn)
-}
-
-#' Set/clear JAVA_HOME
-#' 
-#' Maven needs to know where java is to run. Setting the JAVA_HOME
-#' environment variable can however cause issues with \code{rJava}. If
-#' issues do arise use \code{clear_java_home} after your dependencies are
-#' resolved.
-#' 
-#' @param java_home Character. Indicates location of java on the system. If
-#'     not provided then the function will attempt to find java using standard
-#'     install paths.
-#' @return Logical. \code{TRUE} if JAVA_HOME was set and \code{FALSE} otherwise.
-#' @export
-set_java_home <- function(java_home) {
-  
-  # use what is provided (will trigger return in next block)
-  if (!missing(java_home)) 
-    Sys.setenv(JAVA_HOME=java_home)
-  
-  # don't worry about things if it is already set
-  if (!is.null(Sys.getenv("JAVA_HOME")))
-    return(TRUE)
-      
-  # now we need to go find it
-  java_home <- getOption(".java.home")
-  if (!is.null(java_home)) {
-    Sys.setenv(JAVA_HOME=java_home)
-    return(TRUE)
-  }
-  
-  if (is_windows()) {
-    standard_path <- "C:/Program Files/Java/"
-    java_dirs <- dir(standard_path, full.names=TRUE)
-    
-  } else if (is_unix()) {
-    java_dirs <- suppressWarnings(system("which java", intern=TRUE, ignore.stderr=TRUE))
-    if (length(java_dirs)==0 || grepl("^which: no java", java_dirs)) {
-      standard_path <- "/usr/bin"
-      java_dirs <- dir(standard_path, full.names=TRUE)
-    }
-    
-  } else {
-    warning("Unsupported operating system.")
-    return(FALSE)
-  }
-  
-  java_dirs <- java_dirs[grepl("^jre|java", basename(java_dirs))]
-  if (length(java_dirs)==0) {
-    warning("Unable to find java. Try setting options(.java.home=...)")
-    return(FALSE)
-  }
-  
-  java_dir <- sort(java_dirs, decreasing=TRUE)[1]
-  Sys.setenv(JAVA_HOME=java_dir)
-  return(TRUE)
-}
-
-#' @rdname set_java_home
-#' @export
-clear_java_home <- function() {
-  Sys.setenv(JAVA_HOME="")
 }
 
 #' Find your local maven repository
