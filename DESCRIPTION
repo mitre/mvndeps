@@ -1,6 +1,6 @@
 Package: mvndeps
 Title: Use Maven to resolve dependencies
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: person("Matt", "Pollock", email = "mpollock@mitre.org", role = c("aut", "cre"))
 Description: Use existing maven install to resolve (mostly java) dependencies in
     R packages.
