@@ -27,5 +27,5 @@ get_classpath_from_pom <- function(path, mvn=find_mvn(), java_home) {
   if (any(grepl("^\\[ERROR\\]", res)))
     stop(paste0("Unable to get classpath from inputs. Maven log follows:\n", paste0(res, collapse="\n")))
   
-  return(res[!grepl("^\\[INFO\\]", res)])
+  return(res[!grepl("^\\[", res)])
 }
