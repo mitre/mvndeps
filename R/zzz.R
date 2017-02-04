@@ -11,7 +11,7 @@ set_var <- function(varstr, val) {
 }
 
 is_cached_var <- function(varstr) {
-  return(is.null(get_var(varstr)))
+  return(!is.null(get_var(varstr)))
 }
 
 get_var <- function(varstr) {

@@ -8,7 +8,8 @@
 find_dependency_path(dep, group, version, mvn = find_mvn(), java_home,
   quiet = FALSE)
 
-find_dependency_jar(dep, group, version, mvn = find_mvn(), java_home)
+find_dependency_jar(dep, group, version, mvn = find_mvn(), java_home,
+  quiet = FALSE)
 }
 \arguments{
 \item{dep}{Character. The dependency name. This could be the entire name (e.g.,
