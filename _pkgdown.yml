@@ -1,0 +1,49 @@
+templates:
+  params:
+    bootswatch: cerulean
+    
+home:
+  links:
+  - text: Source
+    href: https://github.com/mitre/mvndeps
+
+navbar:
+  type: inverse
+  left:
+    - text: "Reference"
+      href: reference/index.html
+  right:
+    - icon: fa-question-circle fa-lg
+      href: https://github.com/mitre/mvndeps/issues
+    - icon: fa-github fa-lg
+      href: https://github.com/mitre/mvndeps
+
+reference: 
+  - title: "Get Dependencies"
+    desc: >
+      Retrieve dependencies from either the local or remote repository.
+    contents:
+      - download_dependency
+      - find_dependency_jar
+      - find_dependency_path
+      - get_dependency_jar
+      - get_dependency_path
+  - title: "Find Java Classpath Entries"
+    desc: >
+      Using maven to manage classpaths, it is no longer necessary to rely
+      on having a fat jar (dependencies included) to get java dependencies
+      working in R.
+    contents:
+      - get_classpath
+      - get_classpath_from_pom
+      - write_pom
+  - title: "System Inspection"
+    desc: >
+      Function to find where maven is intalled and to manage how java is
+      available for maven system calls
+    contents: 
+      - find_mvn
+      - clear_java_home
+      - find_java
+      - is_java_available
+      - set_java_home
