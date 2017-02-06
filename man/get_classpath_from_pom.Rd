@@ -2,7 +2,7 @@
 % Please edit documentation in R/mvn_cp.R
 \name{get_classpath_from_pom}
 \alias{get_classpath_from_pom}
-\title{Get a java classpath}
+\title{Get a java classpath from POM}
 \usage{
 get_classpath_from_pom(path, mvn = find_mvn(), java_home)
 }
@@ -17,5 +17,6 @@ get_classpath_from_pom(path, mvn = find_mvn(), java_home)
 \description{
 This function requires a simple pom.xml to function, so its usability is limited. However it can
 be very handy for packages with java dependencies where there is not a fat jar to depend upon.
+If you have a list of dependencies but no actual pom.xml, see \code{\link{get_classpath}}
 }
 

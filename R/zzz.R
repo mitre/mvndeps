@@ -47,22 +47,3 @@ is_unix <- function() {
 is_unsupported_os <- function() {
   return(!(is_windows() | is_unix()))
 }
-
-#' The mvndeps Package
-#' 
-#' A package to interface with maven in handy ways.
-#' 
-#' @section Inteded Use:
-#' 
-#' This package is intendend for use by other packages. The idea is to absolve other packages from
-#' having to manage java dependencies (i.e., include compiled jars in repositories) if the following
-#' constraints can be met:
-#' 
-#' \itemize{
-#'   \item{A reasonable expectation may be made that any user of the package will have maven installed
-#'         and configured on their system. This package does not ship with maven, but uses maven system
-#'         commands on the assumption that those are available.}
-#'   \item{The java dependency is available in a maven repository that any user of the package is
-#'         likely to have configured.}
-#' }
-"_PACKAGE"
