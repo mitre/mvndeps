@@ -1,13 +1,13 @@
 context("Test classpath finder")
 
 test_that("Classpath properly parsed from mvn output", {
-  expected_cp <- c("C:\\m2repo\\org\\myorg\\abdc-parsers\\1.0.1-SNAPSHOT\\abdc-parsers-1.0.1-SNAPSHOT.jar",
-                   "C:\\m2repo\\org\\myorg\\abdc-native-model\\1.0.1-SNAPSHOT\\abdc-native-model-1.0.1-SNAPSHOT.jar",
-                   "C:\\m2repo\\com\\google\\guava\\guava\\18.0\\guava-18.0.jar",
-                   "C:\\m2repo\\org\\myorg\\geolib\\3.0.2\\geolib-3.0.2.jar",
-                   "C:\\m2repo\\org\\myorg\\geolibprimitive\\1.0.1-SNAPSHOT\\geolibprimitive-1.0.1-SNAPSHOT.jar",
-                   "C:\\m2repo\\org\\apache\\logging\\log4j\\log4j-api\\2.5\\log4j-api-2.5.jar",
-                   "C:\\m2repo\\org\\apache\\logging\\log4j\\log4j-core\\2.5\\log4j-core-2.5.jar")
+  expected_cp <- c("/m2repo/org/myorg/abdc-parsers/1.0.1-SNAPSHOT/abdc-parsers-1.0.1-SNAPSHOT.jar",
+                   "/m2repo/org/myorg/abdc-native-model/1.0.1-SNAPSHOT/abdc-native-model-1.0.1-SNAPSHOT.jar",
+                   "/m2repo/com/google/guava/guava/18.0/guava-18.0.jar",
+                   "/m2repo/org/myorg/geolib/3.0.2/geolib-3.0.2.jar",
+                   "/m2repo/org/myorg/geolibprimitive/1.0.1-SNAPSHOT/geolibprimitive-1.0.1-SNAPSHOT.jar",
+                   "/m2repo/org/apache/logging/log4j/log4j-api/2.5/log4j-api-2.5.jar",
+                   "/m2repo/org/apache/logging/log4j/log4j-core/2.5/log4j-core-2.5.jar")
   
   mvn_output <- c("[INFO] Scanning for projects...",
                   "[INFO]",
@@ -17,7 +17,7 @@ test_that("Classpath properly parsed from mvn output", {
                   "[INFO] ",
                   "[INFO] --- maven-dependency-plugin:2.8:build-classpath (default-cli) @ tempproj ---",
                   "[INFO] Dependencies classpath:",
-                  paste0(expected_cp, collapse=";"),
+                  paste0(expected_cp, collapse=ifelse(is_windows(), ";", ":")),
                   "[INFO] ------------------------------------------------------------------------",
                   "[INFO] BUILD SUCCESS",
                   "[INFO] ------------------------------------------------------------------------",
