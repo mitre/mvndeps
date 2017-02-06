@@ -70,7 +70,7 @@ parse_classpath_from_mvn <- function(res) {
   cp <- cp[length(cp)]
   
   # turn semi-colon separated list into character vector
-  cp <- unlist(strsplit(cp, split=";"))
+  cp <- unlist(strsplit(cp, split=ifelse(is_windows(), ";", ":")))
   
   return(cp) 
 }
