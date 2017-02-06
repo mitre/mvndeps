@@ -1,4 +1,9 @@
-#' Set/clear JAVA_HOME
+#' Java for Maven
+#' 
+#' Maven needs java to run. In this case it means that java needs to be available
+#' for maven system commands.
+#' 
+#' @section set/clear JAVA_HOME
 #' 
 #' Maven needs to know where java is to run. Setting the JAVA_HOME
 #' environment variable can however cause issues with \code{rJava}. If
@@ -18,13 +23,26 @@ set_java_home <- function(java_home=find_java(), quiet=FALSE) {
     message(paste("JAVA_HOME now set to", java_home))
 }
 
+#' @section find java:
+#' 
+#' Find a JRE/JDK on the system. This is a convenience function to find java
+#' on the system. It will use \code{getOption(".java.home")} if that is found.
+#' Otherwise it will look in standard install locations depending on the
+#' system platform.
+#' 
 #' @rdname set_java_home
 #' @export
 find_java <- function() {
   
   # defer to set option if it is found
   java_home <- getOption(".java.home")
-  if (!is.null(java_home) && dir.exists(find_java)) {
+  if (!is.null(java_home) && dir.exists(java_home)) {
+    return(java_home)
+  }
+  
+  # defer to previously found location if it is found
+  java_home <- get_var("java.home")
+  if (!is.null(java_home) && dir.exists(java_home)) {
     return(java_home)
   }
   
@@ -51,13 +69,18 @@ find_java <- function() {
     return("")
   }
   
-  return(sort(java_dirs, decreasing=TRUE)[1])
+  java_home <- sort(java_dirs, decreasing=TRUE)[1]
+  set_var("java.home", java_home)
+  return(java_home)
 }
 
 #' @rdname set_java_home
 #' @export
-clear_java_home <- function() {
-  Sys.setenv(JAVA_HOME="")
+clear_java_home <- function(quiet=FALSE) {
+  Sys.unsetenv("JAVA_HOME")
+  if (!quiet)
+    message("JAVA_HOME is now unset")
+  
 }
 
 #' @section java availability:

@@ -13,10 +13,7 @@
 #' @inheritParams find_dependency_path
 #' @export
 get_classpath <- function(dep, group, version, mvn=find_mvn(), java_home, transitive = TRUE, quiet=FALSE) {
-  if (!missing(java_home))
-    set_java_home(java_home)
-  check_mvn_settings_xml(mvn=mvn)
-  
+
   # if not transitive, then this is a synonym for just finding the file location of the
   # specified dependency
   if (!transitive)
@@ -24,10 +21,10 @@ get_classpath <- function(dep, group, version, mvn=find_mvn(), java_home, transi
                                 java_home=java_home, quiet=quiet))
   
   # write pom
-  pom <- write_pom(dep, group, version, mvn=mvn, java_home)
+  pom <- write_pom(dep, group, version)
   
   # now that a pom exists we can use get_classpath_from_pom
-  cp <- get_classpath_from_pom(path=pom, mvn=mvn, java_home=java_home)
+  cp <- get_classpath_from_pom(path=pom, mvn=mvn, java_home=java_home, quiet=quiet)
   
   # cleanup and return
   unlink(pom)
@@ -46,12 +43,9 @@ get_classpath <- function(dep, group, version, mvn=find_mvn(), java_home, transi
 #'   (platform dependent) will be checked.
 #'   
 #' @export
-get_classpath_from_pom <- function(path, mvn=find_mvn(), java_home) {
+get_classpath_from_pom <- function(path, mvn=find_mvn(), java_home, quiet=FALSE) {
   
-  # mvn system checks
-  if (!missing(java_home))
-    set_java_home(java_home)
-  check_mvn_settings_xml(mvn=mvn)
+  configure_mvndeps(mvn=mvn, java_home=java_home, quiet=quiet)
   
   # normalize path - bad things happen when, for example, a path starts with "~"
   path <- normalizePath(path, winslash="/", mustWork=TRUE)
@@ -60,6 +54,7 @@ get_classpath_from_pom <- function(path, mvn=find_mvn(), java_home) {
   cmd <- paste(mvn, "dependency:build-classpath -f ", path)
   res <- system(cmd, intern=TRUE)
   
+  unconfigure_mvndeps(quiet=quiet)
   return(parse_classpath_from_mvn(res))
 }
 

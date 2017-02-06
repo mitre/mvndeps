@@ -13,13 +13,13 @@
 #' @param java_home Character. Path to java. If not provided the standard install paths
 #'   (platform dependent) will be checked.
 #' @param transitive Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.
+#' @param quiet Logical. If \code{FALSE} status messages and some logs/warnings will be printed to the console.
 #' @export
-download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, transitive = TRUE) {
+download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, transitive = TRUE, quiet=FALSE) {
 
-  if (!missing(java_home))
-    set_java_home(java_home)
-
+  configure_mvndeps(mvn=mvn, java_home=java_home, quiet=quiet)
   system(.download_dependency_cmd(dep, group, version, mvn, transitive))
+  unconfigure_mvndeps(quiet=quiet)
 }
 
 #' Build the command to have maven download a dependency (package-private)
@@ -48,14 +48,12 @@ download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, 
 #' then the return value will be \code{NULL}.
 #'  
 #' @inheritParams download_dependency
-#' @param quiet Logical. If \code{TRUE} warnings about missing dependencies will be suppressed.
 #' @seealso \link{download_dependency}
 #' @export
 find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
 
-  if (!missing(java_home))
-    set_java_home(java_home)
-
+  configure_mvndeps(mvn=mvn, java_home=java_home, quiet=quiet)
+  
   # put dependency together
   if (!missing(group))
     dep <- paste0(group, ":", dep)
@@ -71,8 +69,9 @@ find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home,
   if (!dir.exists(path)) {
     if (!quiet)
       warning(paste("Dependency not found in", path))
-    return(NULL)
+    path <- NULL
   }
+  unconfigure_mvndeps(quiet=quiet)
   return(path)
 }
 
