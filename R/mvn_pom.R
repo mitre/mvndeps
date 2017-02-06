@@ -14,16 +14,15 @@
 #'   for use case.
 #' @return the file path of the newly written pom.xml
 #' @export
-write_pom <- function(dep, group, version, mvn=find_mvn(), java_home, transitive = TRUE,
-                      path=tempdir(), artifactid="tempproj", groupid="tempgroup",
-                      artifactversion="0.0.1-SNAPSHOT") {
+write_pom <- function(dep, group, version, path=tempdir(), artifactid="tempproj", 
+                      groupid="tempgroup", artifactversion="0.0.1-SNAPSHOT") {
   
   # put all dependency information together to support all input signatures
   deps <- concatenate_dependencies(dep, group, version)
   
   # open connection to write pom
   filepath <- file.path(path, "pom.xml")
-  con <- file(filepath, open="at")
+  con <- file(filepath, open="wt")
   
   # header stuff
   writeLines('<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', con)
