@@ -104,23 +104,23 @@ find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, 
 #' 
 #' @inheritParams download_dependency
 #' @export
-get_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home) {
+get_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
   path <- find_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=TRUE)
   if (!is.null(path))
     return(path)
   
   # dependency not found in local repo, try downloading it
-  download_dependency(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home)
-  path <- find_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=FALSE)
+  download_dependency(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=quiet)
+  path <- find_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=quiet)
   return(path)
 }
 
 #' @rdname get_dependency_path
 #' @export
-get_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home) {
+get_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
   # force download if needed
-  path <- get_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home)
+  invisible(get_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=quiet))
   
   # get jar
-  return(find_dependency_jar(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home))
+  return(find_dependency_jar(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=quiet))
 }
