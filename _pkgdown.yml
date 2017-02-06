@@ -43,6 +43,7 @@ reference:
       available for maven system calls
     contents: 
       - find_mvn
+      - find_local_mvn_repo
       - clear_java_home
       - find_java
       - is_java_available

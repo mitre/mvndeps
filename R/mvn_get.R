@@ -55,17 +55,13 @@ find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home,
   configure_mvndeps(mvn=mvn, java_home=java_home, quiet=quiet)
   
   # put dependency together
-  if (!missing(group))
-    dep <- paste0(group, ":", dep)
-  
-  if (!missing(version))
-    dep <- paste0(dep, ":", version)
+  dep <- concatenate_dependency(dep, group, version)
   
   # pull dependency apart. this is necessary to support use cases where the group and
   # version inputs are missing
-  dep_parts <- unlist(strsplit(dep, ":"))
-  dep_parts[1:length(dep_parts)-1] <- gsub("\\.", "/", dep_parts[1:length(dep_parts)-1])
-  path <- paste0(find_local_mvn_repo(mvn), "/", paste0(dep_parts, collapse="/"))
+  parsed_dep <- parse_dependency(dep)
+  parsed_dep[c("groupid", "artifactid")] <- gsub("\\.", "/", parsed_dep[c("groupid", "artifactid")])
+  path <- paste0(find_local_mvn_repo(mvn), "/", paste0(parsed_dep, collapse="/"))
   if (!dir.exists(path)) {
     if (!quiet)
       warning(paste("Dependency not found in", path))
@@ -80,11 +76,7 @@ find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home,
 find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
  
   # put dependency together
-  if (!missing(group))
-    dep <- paste0(group, ":", dep)
-  
-  if (!missing(version))
-    dep <- paste0(dep, ":", version)
+  dep <- concatenate_dependency(dep, group, version)
   
   # find path
   path <- find_dependency_path(dep=dep, mvn=mvn, java_home=java_home, quiet=quiet)
@@ -92,10 +84,8 @@ find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, 
     return(NULL)
   
   # get jar name by pealing off group
-  dep_parts <- unlist(strsplit(dep, ":"))
-  if (length(dep_parts) != 3)
-    stop(paste0("Dependency (", dep, ") does not follow expected group:name:version pattern."))
-  jar_name <- paste0(dep_parts[2], "-", dep_parts[3], ".jar")
+  parsed_dep <- parse_dependency(dep)
+  jar_name <- paste0(parsed_dep["artifactid"], "-", parsed_dep["version"], ".jar")
   jar_path <- file.path(path, jar_name)
   
   # find jar
