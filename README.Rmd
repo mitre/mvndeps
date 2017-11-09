@@ -1,4 +1,5 @@
 A package to simplify how java dependencies are handled.
+See https://mitre.github.io/mvndeps/ for documentation.
 
 ## Use
 
