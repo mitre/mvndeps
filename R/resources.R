@@ -24,14 +24,14 @@ find_mvn <- function() {
   } else if (is_unix()) {
     mvn_dirs <- suppressWarnings(system("which mvn", intern=TRUE, ignore.stderr=TRUE))
     if (length(mvn_dirs)==0 || grepl("^which: no mvn", mvn_dirs)) {
-      standard_path <- "/usr/depot"
-      mvn_dirs <- dir(standard_path, full.names=TRUE)
+      standard_paths <- c("/usr/bin", "/usr/depot")
+      mvn_dirs <- dir(standard_paths, full.names=TRUE)
     }
   } else {
     stop("Unsupported operating system.")
   }
   
-  mvn_dirs <- mvn_dirs[grepl("^apache-maven", basename(mvn_dirs))]
+  mvn_dirs <- mvn_dirs[grepl("^(apache-maven|maven|mvn)$", basename(mvn_dirs))]
   if (length(mvn_dirs)==0)
     stop("Unable to find mvn. Try setting options(.mvn.executable=...)")
   mvn_dir <- sort(mvn_dirs, decreasing=TRUE)[1]
