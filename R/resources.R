@@ -18,8 +18,8 @@ find_mvn <- function() {
     return(value)
   }
   if (is_windows()) {
-    standard_path <- "C:/maven"
-    mvn_dirs <- dir(standard_path, full.names=TRUE)
+    standard_paths <- "C:/maven"
+    mvn_dirs <- dir(standard_paths, full.names=TRUE)
     
   } else if (is_unix()) {
     mvn_dirs <- suppressWarnings(system("which mvn", intern=TRUE, ignore.stderr=TRUE))
@@ -34,8 +34,11 @@ find_mvn <- function() {
   mvn_dirs <- mvn_dirs[grepl("^(apache-maven|maven|mvn)$", basename(mvn_dirs))]
   if (length(mvn_dirs)==0)
     stop("Unable to find mvn. Try setting options(.mvn.executable=...)")
-  mvn_dir <- sort(mvn_dirs, decreasing=TRUE)[1]
-  mvn <- file.path(mvn_dir, "bin", "mvn")
+  mvn <- sort(mvn_dirs, decreasing=TRUE)[1]
+  if (dir.exists(mvn) && any("bin"==dir(mvn))) {
+    # mvn might be a directory at this point if using the "standard paths" approach
+    mvn <- file.path(mvn_dir, "bin", "mvn")
+  }
   set_var(".mvn.executable", mvn)
   
   if (!is_java_available()) {
