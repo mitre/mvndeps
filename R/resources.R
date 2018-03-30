@@ -37,7 +37,7 @@ find_mvn <- function() {
   mvn <- sort(mvn_dirs, decreasing=TRUE)[1]
   if (dir.exists(mvn) && any("bin"==dir(mvn))) {
     # mvn might be a directory at this point if using the "standard paths" approach
-    mvn <- file.path(mvn_dir, "bin", "mvn")
+    mvn <- file.path(mvn, "bin", "mvn")
   }
   set_var(".mvn.executable", mvn)
   
