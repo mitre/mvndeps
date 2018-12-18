@@ -36,10 +36,9 @@ write_pom <- function(dep, group, version, path=tempdir(), artifactid="tempproj"
     
   # dependencies
   writeLines('\n\t<dependencies>', con)
-  
-  writeLines('\t\t<dependency>', con)
   for (dep in deps) {
     parsed_dep <- parse_dependency(dep)
+    writeLines('\t\t<dependency>', con)
     writeLines(paste0('\t\t\t<groupId>', parsed_dep["groupid"], '</groupId>'), con)
     writeLines(paste0('\t\t\t<artifactId>', parsed_dep["artifactid"], '</artifactId>'), con)
     writeLines(paste0('\t\t\t<version>', parsed_dep["version"], '</version>'), con)
