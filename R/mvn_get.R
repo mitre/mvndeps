@@ -15,7 +15,7 @@
 #' @param transitive Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.
 #' @param quiet Logical. If \code{FALSE} status messages and some logs/warnings will be printed to the console.
 #' @export
-download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, transitive = TRUE, quiet=FALSE) {
+download_dependency <- function(dep, group, version, mvn = find_mvn(), java_home, transitive = TRUE, quiet = FALSE) {
 
   configure_mvndeps(mvn=mvn, java_home=java_home, quiet=quiet)
   system(.download_dependency_cmd(dep, group, version, mvn, transitive))
@@ -32,11 +32,8 @@ download_dependency <- function(dep, group, version, mvn=find_mvn(), java_home, 
 #' @keywords internal
 .download_dependency_cmd <- function(dep, group, version, mvn, transitive = TRUE) {
   
-  if (!missing(group))
-    dep <- paste0(group, ":", dep)
-  
-  if (!missing(version))
-    dep <- paste0(dep, ":", version)
+  # put dependency together
+  dep <- concatenate_dependency(dep, group, version)
   
   return(paste0(mvn, " dependency:get -Dartifact=", dep, " -Dtransitive=", ifelse(transitive,'true','false')))
 }
@@ -73,7 +70,7 @@ find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home,
 
 #' @rdname find_dependency_path
 #' @export
-find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
+find_dependency_jar <- function(dep, group, version, mvn = find_mvn(), java_home, quiet = FALSE) {
  
   # put dependency together
   dep <- concatenate_dependency(dep, group, version)
@@ -104,7 +101,7 @@ find_dependency_jar <- function(dep, group, version, mvn=find_mvn(), java_home, 
 #' 
 #' @inheritParams download_dependency
 #' @export
-get_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home, quiet=FALSE) {
+get_dependency_path <- function(dep, group, version, mvn = find_mvn(), java_home, quiet = FALSE) {
   path <- find_dependency_path(dep=dep, group=group, version=version, mvn=mvn, java_home=java_home, quiet=TRUE)
   if (!is.null(path))
     return(path)

@@ -66,8 +66,12 @@ find_local_mvn_repo <- function(mvn=find_mvn()) {
   cmd <- paste(mvn, "help:evaluate -Dexpression=settings.localRepository")
   res <- system(cmd, intern=TRUE)
   m2repo <- res[!grepl("[", res, fixed=TRUE)]
-  if (length(m2repo)==0)
+  if (length(m2repo) == 0)
     stop("Unable to find local maven repository. Ensure maven is properly installed and found.")
+  
+  # sometimes if other dependencies are coming in there is still junk in the array, take last entry
+  if (length(m2repo) > 1)
+    m2repo <- m2repo[length(m2repo)]
   
   # fix path on windows to use forward slashes (what R expects)
   m2repo <- gsub("\\\\", "/", m2repo)

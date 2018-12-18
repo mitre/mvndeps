@@ -12,7 +12,7 @@
 #' 
 #' @inheritParams find_dependency_path
 #' @export
-get_classpath <- function(dep, group, version, mvn=find_mvn(), java_home, transitive = TRUE, quiet=FALSE) {
+get_classpath <- function(dep, group, version, mvn = find_mvn(), java_home, transitive = TRUE, quiet = FALSE) {
 
   # if not transitive, then this is a synonym for just finding the file location of the
   # specified dependency
