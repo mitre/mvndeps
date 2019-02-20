@@ -10,7 +10,7 @@
 #' to be specified it is probably less confusing (unless the values are coming from a \code{data.frame})
 #' to provide a vector of completely specified dependencies in the \code{dep} argument.
 #' 
-#' @inheritParams find_dependency_path
+#' @inheritParams download_dependency
 #' @export
 get_classpath <- function(dep, group, version, mvn = find_mvn(), java_home, transitive = TRUE, quiet = FALSE) {
 
@@ -38,9 +38,7 @@ get_classpath <- function(dep, group, version, mvn = find_mvn(), java_home, tran
 #' If you have a list of dependencies but no actual pom.xml, see \code{\link{get_classpath}}
 #' 
 #' @param path Character. Path to the directory containing a pom.xml to derive paths for
-#' @param mvn Character. The path the the maven installation.
-#' @param java_home Character. Path to java. If not provided the standard install paths
-#'   (platform dependent) will be checked.
+#' @inheritParams download_dependency
 #'   
 #' @export
 get_classpath_from_pom <- function(path, mvn=find_mvn(), java_home, quiet=FALSE) {

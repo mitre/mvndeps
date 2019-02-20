@@ -8,7 +8,22 @@ get_classpath(dep, group, version, mvn = find_mvn(), java_home,
   transitive = TRUE, quiet = FALSE)
 }
 \arguments{
-\item{quiet}{Logical. If \code{TRUE} warnings about missing dependencies will be suppressed.}
+\item{dep}{Character. The dependency name. This could be the entire name (e.g.,
+group:dependency:version) in which case the other inputs may be omitted. Otherwise
+it can be just the dependency name (i.e., the part in the middle of the above example).}
+
+\item{group}{Character. The maven artifact group name.}
+
+\item{version}{Character. The desired version of the dependency.}
+
+\item{mvn}{Character. The path the the maven installation.}
+
+\item{java_home}{Character. Path to java. If not provided the standard install paths
+(platform dependent) will be checked.}
+
+\item{transitive}{Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.}
+
+\item{quiet}{Logical. If \code{FALSE} status messages and some logs/warnings will be printed to the console.}
 }
 \description{
 Given one or more dependencies retrieve a classpath that can be used to set up
