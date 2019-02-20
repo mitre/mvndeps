@@ -54,7 +54,6 @@ find_mvn <- function() {
 #' This is primarily intended for internal use. It may however be useful for some to have
 #' a programatic way of identifying the local maven reposiory.
 #' 
-#' @param mvn Character. The path the the maven installation.
 #' @export
 find_local_mvn_repo <- function(mvn=find_mvn()) {
   

@@ -4,7 +4,7 @@
 #' dependencies with dependencies of their own. For the most part this is probably not a function that users
 #' should be calling directly.
 #' 
-#' @inheritParams get_dependency_path
+#' @inheritParams get_classpath
 #' @param path Character. The path where the pom should be written. 
 #' @param artifactid Character. The \code{artifactId} entry in the resulting pom.xml. Unless you intend
 #'   to save this pom for future use this entry does not really matter and the default is fine.

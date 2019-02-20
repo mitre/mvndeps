@@ -4,19 +4,11 @@
 \alias{write_pom}
 \title{Write a basic pom.xml}
 \usage{
-write_pom(dep, group, version, path = tempdir(),
-  artifactid = "tempproj", groupid = "tempgroup",
-  artifactversion = "0.0.1-SNAPSHOT")
+write_pom(dep, group, version, mvn = find_mvn(), java_home,
+  transitive = TRUE, path = tempdir(), artifactid = "tempproj",
+  groupid = "tempgroup", artifactversion = "0.0.1-SNAPSHOT")
 }
 \arguments{
-\item{dep}{Character. The dependency name. This could be the entire name (e.g.,
-group:dependency:version) in which case the other inputs may be omitted. Otherwise
-it can be just the dependency name (i.e., the part in the middle of the above example).}
-
-\item{group}{Character. The maven artifact group name.}
-
-\item{version}{Character. The desired version of the dependency.}
-
 \item{path}{Character. The path where the pom should be written.}
 
 \item{artifactid}{Character. The \code{artifactId} entry in the resulting pom.xml. Unless you intend
@@ -36,3 +28,4 @@ The purpose of this function is to write a pom.xml to support classpath manageme
 dependencies with dependencies of their own. For the most part this is probably not a function that users
 should be calling directly.
 }
+
