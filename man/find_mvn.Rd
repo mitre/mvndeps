@@ -12,4 +12,3 @@ maven. As such it is required that the user independently install maven. This
 function will try to find the maven executable assuming that maven is already
 installed.
 }
-

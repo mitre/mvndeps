@@ -94,7 +94,7 @@ find_dependency_jar <- function(dep, group, version, mvn = find_mvn(), java_home
 
 #' Have maven get a dependency
 #' 
-#' This function wraps \code{\link{download_dependency}} and \code{\link{find_dependency}}. 
+#' This function wraps \code{\link{download_dependency}} and \code{\link{find_dependency_path}}. 
 #' It will look to see if the dependency is already available in the local maven repository.
 #' If it is it will return the path. If it isn't then it will download the dependency and then
 #' return the path.

@@ -6,8 +6,10 @@
 \usage{
 find_local_mvn_repo(mvn = find_mvn())
 }
+\arguments{
+\item{mvn}{Character. The path the the maven installation.}
+}
 \description{
 This is primarily intended for internal use. It may however be useful for some to have
 a programatic way of identifying the local maven reposiory.
 }
-
