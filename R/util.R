@@ -22,3 +22,12 @@ parse_dependency <- function(dep, group, version) {
   
   return(c(groupid=dep_parts[1], artifactid=dep_parts[2], version=dep_parts[3]))
 }
+
+#' Get maven version string
+#' 
+#' @export
+mvn_version <- function(mvn = find_mvn()) {
+  version_spew <- system(paste(mvn, "--version"), intern = TRUE)
+  parts <- strsplit(version_spew[1], split = "\\s")
+  return(parts[[1]][3])
+}

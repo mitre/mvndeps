@@ -34,8 +34,9 @@ download_dependency <- function(dep, group, version, mvn = find_mvn(), java_home
   
   # put dependency together
   dep <- concatenate_dependency(dep, group, version)
+  mvn_dep_plugin <- paste0("org.apache.maven.plugins:maven-dependency-plugin:", mvn_version())
   
-  return(paste0(mvn, " dependency:get -Dartifact=", dep, " -Dtransitive=", ifelse(transitive,'true','false')))
+  return(paste0(mvn, " ", mvn_dep_plugin, ":get -Dartifact=", dep, " -Dtransitive=", ifelse(transitive,'true','false')))
 }
 
 #' Have maven find a dependency

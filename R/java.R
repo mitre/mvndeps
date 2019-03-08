@@ -3,7 +3,7 @@
 #' Maven needs java to run. In this case it means that java needs to be available
 #' for maven system commands.
 #' 
-#' @section set/clear JAVA_HOME
+#' @section set/clear JAVA_HOME:
 #' 
 #' Maven needs to know where java is to run. Setting the JAVA_HOME
 #' environment variable can however cause issues with \code{rJava}. If
