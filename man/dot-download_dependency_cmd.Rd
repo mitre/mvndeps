@@ -4,7 +4,8 @@
 \alias{.download_dependency_cmd}
 \title{Build the command to have maven download a dependency (package-private)}
 \usage{
-.download_dependency_cmd(dep, group, version, mvn, transitive = TRUE)
+.download_dependency_cmd(dep, group, version, mvn, transitive = TRUE,
+  dep_plugin_version)
 }
 \arguments{
 \item{dep}{Character. The dependency name. This could be the entire name (e.g.,
@@ -18,6 +19,9 @@ it can be just the dependency name (i.e., the part in the middle of the above ex
 \item{mvn}{Character. The path the the maven installation.}
 
 \item{transitive}{Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.}
+
+\item{dep_plugin_version}{Character. The version of the maven dependency plugin. See https://github.com/apache/maven-dependency-plugin/releases
+for release versions.}
 }
 \description{
 This function will build a system command using the maven dependency get funtionality to download a (java)

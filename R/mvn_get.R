@@ -14,11 +14,14 @@
 #'   (platform dependent) will be checked.
 #' @param transitive Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.
 #' @param quiet Logical. If \code{FALSE} status messages and some logs/warnings will be printed to the console.
+#' @param dep_plugin_version Character. The version of the maven dependency plugin. See https://github.com/apache/maven-dependency-plugin/releases
+#'   for release versions.
 #' @export
-download_dependency <- function(dep, group, version, mvn = find_mvn(), java_home, transitive = TRUE, quiet = FALSE) {
+download_dependency <- function(dep, group, version, mvn = find_mvn(), java_home, transitive = TRUE, quiet = FALSE,
+                                dep_plugin_version = "3.1.1") {
 
   configure_mvndeps(mvn=mvn, java_home=java_home, quiet=quiet)
-  system(.download_dependency_cmd(dep, group, version, mvn, transitive))
+  system(.download_dependency_cmd(dep, group, version, mvn, transitive, dep_plugin_version))
   unconfigure_mvndeps(quiet=quiet)
 }
 
@@ -30,11 +33,11 @@ download_dependency <- function(dep, group, version, mvn = find_mvn(), java_home
 #' @inheritParams download_dependency
 #' 
 #' @keywords internal
-.download_dependency_cmd <- function(dep, group, version, mvn, transitive = TRUE) {
+.download_dependency_cmd <- function(dep, group, version, mvn, transitive = TRUE, dep_plugin_version) {
   
   # put dependency together
   dep <- concatenate_dependency(dep, group, version)
-  mvn_dep_plugin <- paste0("org.apache.maven.plugins:maven-dependency-plugin:", mvn_version())
+  mvn_dep_plugin <- paste0("org.apache.maven.plugins:maven-dependency-plugin:", dep_plugin_version)
   
   return(paste0(mvn, " ", mvn_dep_plugin, ":get -Dartifact=", dep, " -Dtransitive=", ifelse(transitive,'true','false')))
 }

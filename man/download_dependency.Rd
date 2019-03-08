@@ -5,7 +5,7 @@
 \title{Have maven download a dependency}
 \usage{
 download_dependency(dep, group, version, mvn = find_mvn(), java_home,
-  transitive = TRUE, quiet = FALSE)
+  transitive = TRUE, quiet = FALSE, dep_plugin_version = "3.1.1")
 }
 \arguments{
 \item{dep}{Character. The dependency name. This could be the entire name (e.g.,
@@ -24,6 +24,9 @@ it can be just the dependency name (i.e., the part in the middle of the above ex
 \item{transitive}{Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.}
 
 \item{quiet}{Logical. If \code{FALSE} status messages and some logs/warnings will be printed to the console.}
+
+\item{dep_plugin_version}{Character. The version of the maven dependency plugin. See https://github.com/apache/maven-dependency-plugin/releases
+for release versions.}
 }
 \description{
 This function will use the maven dependency get funtionality to download a (java)
