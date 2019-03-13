@@ -61,7 +61,7 @@ find_dependency_path <- function(dep, group, version, mvn=find_mvn(), java_home,
   # pull dependency apart. this is necessary to support use cases where the group and
   # version inputs are missing
   parsed_dep <- parse_dependency(dep)
-  parsed_dep[c("groupid", "artifactid")] <- gsub("\\.", "/", parsed_dep[c("groupid", "artifactid")])
+  parsed_dep[c("groupid")] <- gsub("\\.", "/", parsed_dep[c("groupid")])
   path <- paste0(find_local_mvn_repo(mvn), "/", paste0(parsed_dep, collapse="/"))
   if (!dir.exists(path)) {
     if (!quiet)
