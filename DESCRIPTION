@@ -6,6 +6,7 @@ Description: Use existing maven install to resolve (mostly java) dependencies in
     R packages.
 Depends:
     R (>= 3.2.1)
+Imports: sys, purrr
 License: Apache License 2.0 | file LICENSE
 Encoding: UTF-8
 LazyData: true

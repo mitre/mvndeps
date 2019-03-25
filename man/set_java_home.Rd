@@ -4,7 +4,6 @@
 \alias{set_java_home}
 \alias{find_java}
 \alias{clear_java_home}
-\alias{is_java_available}
 \title{Java for Maven}
 \usage{
 set_java_home(java_home = find_java(), quiet = FALSE)
@@ -12,8 +11,6 @@ set_java_home(java_home = find_java(), quiet = FALSE)
 find_java()
 
 clear_java_home(quiet = FALSE)
-
-is_java_available()
 }
 \arguments{
 \item{java_home}{Character. Indicates location of java on the system. If
@@ -42,15 +39,5 @@ Find a JRE/JDK on the system. This is a convenience function to find java
 on the system. It will use \code{getOption(".java.home")} if that is found.
 Otherwise it will look in standard install locations depending on the
 system platform.
-}
-
-\section{java availability}{
-
-
-This function runs \code{mvn -version} to determine if java is on the system path used
-by maven when executed from R. This test is a little different from, for example, 
-executing \code{system("java -version")}. There are cases where java may be available
-for system commands but not specifically set on a system path and hence unavailable for
-use by maven.
 }
 
