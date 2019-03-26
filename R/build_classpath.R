@@ -69,8 +69,10 @@ build_classpath <- function(artifacts, pom_path, pkg_name, pom_name = "pom.xml",
     dep_plugin_version <- .globals$dep_plugin_version
 
   # write pom
+  unlink_pom <- FALSE
   if (!missing(artifacts)) {
     pom_path <- write_pom(artifacts)
+    unlink_pom <- TRUE
   } else if (!missing(pkg_name)) {
     pom_path <- system.file("java", pom_name, package = pkg_name)
     if (pom_path == "")
@@ -83,7 +85,7 @@ build_classpath <- function(artifacts, pom_path, pkg_name, pom_name = "pom.xml",
     # mvn args
   mvn_dep_plugin <- paste0("org.apache.maven.plugins:maven-dependency-plugin:", dep_plugin_version)
   args <- c(paste0(mvn_dep_plugin, ":build-classpath"),
-            paste("-f", pom_path),
+            "-f", pom_path,
             paste0("-DincludeScope=", include_scope),
             ifelse(missing(local_repo), NA_character_, paste0("-DlocalRepoProperty=", local_repo)),
             paste0("-DoutputAbsoluteArtifactFilename=", tolower(absolute_paths)),
@@ -96,10 +98,12 @@ build_classpath <- function(artifacts, pom_path, pkg_name, pom_name = "pom.xml",
   }
 
   # now that a pom exists we can use get_classpath_from_pom
-  cp <- get_classpath_from_pom(args = args, cp_file = cp_file, verbose = verbose)
+  cp <- get_classpath_from_pom(args = args, verbose = verbose)
 
   # cleanup and return
-  unlink(pom)
+  if (unlink_pom)
+    unlink(pom_path)
+
   return(cp)
 }
 
@@ -113,20 +117,19 @@ build_classpath <- function(artifacts, pom_path, pkg_name, pom_name = "pom.xml",
 #' @inheritParams download_dependency
 #'
 #' @export
-get_classpath_from_pom <- function(args, cp_file, verbose = FALSE) {
+get_classpath_from_pom <- function(args, verbose = FALSE) {
 
   # get classpath
-  res <- execute_mvn_cmd(args, use_system2 = TRUE)
-  mvn_spew <- rawToChar(res$stdout)
+  res <- execute_mvn_cmd(args)
+  mvn_spew <- parse_sys_return(res$stdout)
 
   if (res$status != 0) {
-    message(mvn_spew)
-    message(rawToChar(res$stderr))
+    print_messages(res)
     stop("Failed to build a classpath with status ", res$status)
   }
 
   if (verbose) {
-    message(mvn_spew)
+    print_messages(res)
   }
 
   # unconfigure_mvndeps(quiet=quiet)
@@ -134,8 +137,6 @@ get_classpath_from_pom <- function(args, cp_file, verbose = FALSE) {
 }
 
 parse_classpath_from_mvn <- function(res) {
-
-  res <- unlist(strsplit(res, "\\n"))
 
   # report errors
   if (any(grepl("^\\[ERROR\\]", res)))

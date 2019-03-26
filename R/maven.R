@@ -168,26 +168,11 @@ get_mvn_settings <- function() {
 #' @noRd
 #' @importFrom purrr %>%
 #' @importFrom sys exec_internal
-execute_mvn_cmd <- function(args, cmd = .globals$which_mvn, use_system2 = FALSE) {
+execute_mvn_cmd <- function(args, cmd = .globals$which_mvn) {
 
   # to support purrr pipelines need to be able to handle list args
   if (is.list(args))
     args <- unlist(args)
-
-  # hopefully this is a temporary patch pending https://github.com/jeroen/sys/issues/26
-  if (use_system2) {
-    result <- tryCatch(list(status = 0,
-                            stdout = system2(cmd, args, stdout = TRUE, stderr = TRUE) %>%
-                              paste(collapse="\n") %>%
-                              charToRaw(),
-                            stderr = raw(0)),
-                       error = function(e) {
-                         list(status = 1,
-                              stdout = raw(0),
-                              stderr = charToRaw(e$message))
-                       })
-    return(result)
-  }
 
   tryCatch(exec_internal(cmd, args = args, error = FALSE),
            error = function(e) {
