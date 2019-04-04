@@ -32,6 +32,9 @@ Only used if \code{pkg_name} is provided.}
 \item{dep_plugin_version}{Character. The version of the maven dependency plugin. See https://github.com/apache/maven-dependency-plugin/releases
 for release versions.}
 
+\item{include_scope}{Character. Scope to include. An Empty string indicates all scopes. Possible
+scopes are \code{c("runtime", "compile", "test", "provided", "system")}.}
+
 \item{local_repo}{Character. Path to local maven repository. If missing then the default location
 or the location specified in a user's settings.xml will be used.}
 
@@ -44,10 +47,7 @@ or the location specified in a user's settings.xml will be used.}
 \item{overwrite_snapshots}{Logical. If \code{TRUE} overwrite snapshot artifacts.}
 
 \item{mvn_args}{Character vector. Additional arguments to pass to the Maven dependency:build-classpath
-plugin. Should be of the form \code{c("-Dparam1=value1", -Dparam2=value2")}.}
-
-\item{includeScope}{Character. Scope to include. An Empty string indicates all scopes. Possible
-scopes are \code{"runtime", "compile", "test", "provided", "system"}}
+plugin. Should be of the form \code{c("-Dparam1=value1", "-Dparam2=value2")}.}
 }
 \description{
 Given one or more dependencies retrieve a classpath that can be used to set up

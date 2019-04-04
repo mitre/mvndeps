@@ -39,10 +39,10 @@ augment_classpath <- function(artifacts, pom_path, pkg_name, pom_name = "pom.xml
 #' @inheritParams get_dependencies
 #' @param pom_path Character. Path to a pom.xml to build a classpath from.
 #' @param pkg_name Character. Name of a package that has a pom.xml in the inst/java directory.
-#' @param  pom_name Character. Name of the pom file (in case of nonstandard names, like mvndeps.xml).
+#' @param pom_name Character. Name of the pom file (in case of nonstandard names, like mvndeps.xml).
 #'   Only used if \code{pkg_name} is provided.
-#' @param includeScope Character. Scope to include. An Empty string indicates all scopes. Possible
-#'   scopes are \code{"runtime", "compile", "test", "provided", "system"}
+#' @param include_scope Character. Scope to include. An Empty string indicates all scopes. Possible
+#'   scopes are \code{c("runtime", "compile", "test", "provided", "system")}.
 #' @param local_repo Character. Path to local maven repository. If missing then the default location
 #'   or the location specified in a user's settings.xml will be used.
 #' @param absolute_paths Logical. Output absolute filename for resolved artifacts.
@@ -50,7 +50,7 @@ augment_classpath <- function(artifacts, pom_path, pkg_name, pom_name = "pom.xml
 #' @param overwrite_releases Logical. If \code{TRUE} overwrite release artifacts.
 #' @param overwrite_snapshots Logical. If \code{TRUE} overwrite snapshot artifacts.
 #' @param mvn_args Character vector. Additional arguments to pass to the Maven dependency:build-classpath
-#'   plugin. Should be of the form \code{c("-Dparam1=value1", -Dparam2=value2")}.
+#'   plugin. Should be of the form \code{c("-Dparam1=value1", "-Dparam2=value2")}.
 #'
 #' @importFrom purrr %>%
 #' @export
