@@ -26,6 +26,6 @@ test_that("Classpath properly parsed from mvn output", {
                   "[INFO] Final Memory: 13M/150M",
                   "[INFO] ------------------------------------------------------------------------")
 
-  cp <- parse_classpath_from_mvn(paste(mvn_output, collapse = "\n"))
+  cp <- parse_classpath_from_mvn(mvn_output)
   expect_equal(cp, expected_cp)
 })
