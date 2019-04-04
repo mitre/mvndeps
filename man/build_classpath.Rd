@@ -47,7 +47,7 @@ or the location specified in a user's settings.xml will be used.}
 plugin. Should be of the form \code{c("-Dparam1=value1", -Dparam2=value2")}.}
 
 \item{includeScope}{Character. Scope to include. An Empty string indicates all scopes. Possible
-scopes are "runtime", "compile", "test", "provided", "system"}
+scopes are \code{"runtime", "compile", "test", "provided", "system"}}
 }
 \description{
 Given one or more dependencies retrieve a classpath that can be used to set up

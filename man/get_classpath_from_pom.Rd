@@ -4,7 +4,7 @@
 \alias{get_classpath_from_pom}
 \title{Get a java classpath from POM}
 \usage{
-get_classpath_from_pom(args, cp_file, verbose = FALSE)
+get_classpath_from_pom(args, verbose = FALSE)
 }
 \arguments{
 \item{path}{Character. Path to the directory containing a pom.xml to derive paths for}

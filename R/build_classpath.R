@@ -42,7 +42,7 @@ augment_classpath <- function(artifacts, pom_path, pkg_name, pom_name = "pom.xml
 #' @param  pom_name Character. Name of the pom file (in case of nonstandard names, like mvndeps.xml).
 #'   Only used if \code{pkg_name} is provided.
 #' @param includeScope Character. Scope to include. An Empty string indicates all scopes. Possible
-#'   scopes are "runtime", "compile", "test", "provided", "system"
+#'   scopes are \code{"runtime", "compile", "test", "provided", "system"}
 #' @param local_repo Character. Path to local maven repository. If missing then the default location
 #'   or the location specified in a user's settings.xml will be used.
 #' @param absolute_paths Logical. Output absolute filename for resolved artifacts.
