@@ -1,15 +1,15 @@
 context("pom.xml generation")
 
 test_that("1-dependency pom write out correctly", {
-  pom <- write_pom(dep="test-dep", group="test-group", version="test-version")
+  pom <- write_pom(deps = "test-group:test-dep:test-version")
   pomlines <- readLines(pom)
-  
+
   expectedlines <- c("<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"",
                      "xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">",
-                     "\t<modelVersion>4.0.0</modelVersion>",       
+                     "\t<modelVersion>4.0.0</modelVersion>",
                      "",
-                     "\t<artifactId>tempproj</artifactId>",
-                     "\t<groupId>tempgroup</groupId>",
+                     "\t<artifactId>temp-proj</artifactId>",
+                     "\t<groupId>temp-group</groupId>",
                      "\t<version>0.0.1-SNAPSHOT</version>",
                      "",
                      "\t<dependencies>",
@@ -20,23 +20,23 @@ test_that("1-dependency pom write out correctly", {
                      "\t\t</dependency>",
                      "\t</dependencies>",
                      "</project>")
-  
+
   expect_equal(pomlines, expectedlines)
   unlink(pom)
 })
 
 test_that("3-dependency pom write out correctly", {
-  pom <- write_pom(dep=c("test-group1:test-dep1:test-version1",
-                         "test-group2:test-dep2:test-version2",
-                         "test-group3:test-dep3:test-version3"))
+  pom <- write_pom(dep = c("test-group1:test-dep1:test-version1",
+                           "test-group2:test-dep2:test-version2",
+                           "test-group3:test-dep3:test-version3"))
   pomlines <- readLines(pom)
-  
+
   expectedlines <- c("<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"",
                      "xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">",
                      "\t<modelVersion>4.0.0</modelVersion>",
                      "",
-                     "\t<artifactId>tempproj</artifactId>",
-                     "\t<groupId>tempgroup</groupId>",
+                     "\t<artifactId>temp-proj</artifactId>",
+                     "\t<groupId>temp-group</groupId>",
                      "\t<version>0.0.1-SNAPSHOT</version>",
                      "",
                      "\t<dependencies>",
@@ -57,7 +57,7 @@ test_that("3-dependency pom write out correctly", {
                      "\t\t</dependency>",
                      "\t</dependencies>",
                      "</project>")
-  
+
   expect_equal(pomlines, expectedlines)
   unlink(pom)
 })

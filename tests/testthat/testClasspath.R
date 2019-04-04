@@ -8,7 +8,7 @@ test_that("Classpath properly parsed from mvn output", {
                    "/m2repo/org/myorg/geolibprimitive/1.0.1-SNAPSHOT/geolibprimitive-1.0.1-SNAPSHOT.jar",
                    "/m2repo/org/apache/logging/log4j/log4j-api/2.5/log4j-api-2.5.jar",
                    "/m2repo/org/apache/logging/log4j/log4j-core/2.5/log4j-core-2.5.jar")
-  
+
   mvn_output <- c("[INFO] Scanning for projects...",
                   "[INFO]",
                   "[INFO] ------------------------------------------------------------------------",
@@ -25,7 +25,7 @@ test_that("Classpath properly parsed from mvn output", {
                   "[INFO] Finished at: 2017-02-06T11:43:59-05:00",
                   "[INFO] Final Memory: 13M/150M",
                   "[INFO] ------------------------------------------------------------------------")
-  
-  cp <- parse_classpath_from_mvn(mvn_output)
+
+  cp <- parse_classpath_from_mvn(paste(mvn_output, collapse = "\n"))
   expect_equal(cp, expected_cp)
 })
