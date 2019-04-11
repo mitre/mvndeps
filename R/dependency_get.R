@@ -21,13 +21,13 @@
 #'   for release versions.
 #' @param verbose Logical. Dump maven output to console.
 #'
-#' @importFrom purrr %>% map map2
+#' @importFrom purrr %>% map map2 map_int pluck
 #' @return an integer vector of status codes, one for each artifact listed. Status code 0 indicates that the artifact
 #'   was successfully retrieved.
 #' @export
-get_dependencies <- function(artifacts, transitive = TRUE, remote_repos, dep_plugin_version, verbose = FALSE) {
+get_dependencies <- function(artifacts, transitive = TRUE, remote_repos = NULL, dep_plugin_version = NULL, verbose = FALSE) {
 
-  if (missing(dep_plugin_version))
+  if (is.null(dep_plugin_version))
     dep_plugin_version <- .globals$dep_plugin_version
 
   results <- artifacts %>%
@@ -54,14 +54,14 @@ get_dependencies <- function(artifacts, transitive = TRUE, remote_repos, dep_plu
 #' @inheritParams download_dependency
 #'
 #' @keywords internal
-.dependency_get_args <- function(artifact, transitive = TRUE, remote_repos = remote_repos, dep_plugin_version) {
+.dependency_get_args <- function(artifact, transitive = TRUE, remote_repos = NULL, dep_plugin_version) {
 
   mvn_dep_plugin <- paste0("org.apache.maven.plugins:maven-dependency-plugin:", dep_plugin_version)
   args <- c(paste0(mvn_dep_plugin, ":get"),
             paste0("-Dartifact=", artifact),
             paste0("-Dtransitive=", ifelse(transitive,'true','false')))
 
-  if (!missing(remote_repos)) {
+  if (!is.null(remote_repos)) {
     remotes <- paste(remote_repos, collapse = ",")
     args <- c(args, paste0("-DremoteRepositories=", remotes))
   }

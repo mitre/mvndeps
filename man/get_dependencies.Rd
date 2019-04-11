@@ -4,8 +4,8 @@
 \alias{get_dependencies}
 \title{Force Download a Java Dependency}
 \usage{
-get_dependencies(artifacts, transitive = TRUE, remote_repos,
-  dep_plugin_version, verbose = FALSE)
+get_dependencies(artifacts, transitive = TRUE, remote_repos = NULL,
+  dep_plugin_version = NULL, verbose = FALSE)
 }
 \arguments{
 \item{artifacts}{Character vector. Should be of the form 'groupId:artifactId:version[:packaging[:classifier]]'

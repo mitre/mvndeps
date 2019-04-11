@@ -4,8 +4,8 @@
 \alias{.dependency_get_args}
 \title{Build the command to have maven download a dependency (package-private)}
 \usage{
-.dependency_get_args(artifact, transitive = TRUE,
-  remote_repos = remote_repos, dep_plugin_version)
+.dependency_get_args(artifact, transitive = TRUE, remote_repos = NULL,
+  dep_plugin_version)
 }
 \arguments{
 \item{transitive}{Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.}
