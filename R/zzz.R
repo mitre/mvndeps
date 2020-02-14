@@ -2,7 +2,7 @@ utils::globalVariables(".")
 
 #' @importFrom purrr %||%
 .onLoad <- function(libname, pkgname) {
-  check_mvn()
+  check_mvn() # only issues a warning
 }
 
 is_windows <- function() {

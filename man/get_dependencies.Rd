@@ -4,8 +4,13 @@
 \alias{get_dependencies}
 \title{Force Download a Java Dependency}
 \usage{
-get_dependencies(artifacts, transitive = TRUE, remote_repos = NULL,
-  dep_plugin_version = NULL, verbose = FALSE)
+get_dependencies(
+  artifacts,
+  transitive = TRUE,
+  remote_repos = NULL,
+  dep_plugin_version = NULL,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{artifacts}{Character vector. Should be of the form 'groupId:artifactId:version[:packaging[:classifier]]'
@@ -18,8 +23,9 @@ of the form 'id::[layout]::url', or simply using the URL is ok. For example, for
 'central::default::http://repo1.maven.apache.org/maven2'. If missing the repositories configured in the user's
 \code{settings.xml} will be used.}
 
-\item{dep_plugin_version}{Character. The version of the maven dependency plugin. See https://github.com/apache/maven-dependency-plugin/releases
-for release versions.}
+\item{dep_plugin_version}{Character. The version of the maven dependency plugin. See
+https://github.com/apache/maven-dependency-plugin/releases for release versions. If nothing is provided then
+a default version is chosen (may change over time with releases of this package).}
 
 \item{verbose}{Logical. Dump maven output to console.}
 }
@@ -33,7 +39,7 @@ repository. It will not resolve the classpath in the sense of returning a list o
 to the java classpath. For that use case see \code{\link{build_classpath}}.
 }
 \details{
-Under the hood this is using the maven dependency:get plugin. See
+Under the hood this is using the maven \code{dependency:get} plugin. See
 https://maven.apache.org/plugins/maven-dependency-plugin/get-mojo.html for details. One consequence
 of this is that each artifact in the input must be downloaded separately. However common transitive
 dependencies will not be redownloaded as maven will detect that a given transitive dependency is already

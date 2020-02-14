@@ -6,6 +6,12 @@
 \usage{
 find_artifacts(artifacts, verbose = FALSE)
 }
+\arguments{
+\item{artifacts}{Character vector. Should be of the form 'groupId:artifactId:version[:packaging[:classifier]]'
+where the packaging and classifier inputs are optional.}
+
+\item{verbose}{Logical. Dump maven output to console.}
+}
 \description{
 This function will find a maven dependency in your local maven repository. Note that
 if the dependency has not yet been downloaded (e.g., via \code{\link{download_dependency}})

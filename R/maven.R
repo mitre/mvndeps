@@ -11,44 +11,20 @@
 #' @export
 find_mvn <- function() {
 
-  # try to find maven on the system
-  mvn_pattern <- "^(apache-maven|maven|mvn)$"
-  if (is_windows()) {
-    standard_paths <- "C:/maven"
-    mvn_dirs <- dir(standard_paths, full.names = TRUE, pattern = mvn_pattern)
-  } else if (is_unix()) {
-    res <- exec_internal("which", args = "mvn", error = FALSE)
-    if (res$status == 0) {
-      mvn_dirs <- gsub("\\n$", "", rawToChar(res$stdout))
-    } else {
-      standard_paths <- c("/usr/bin", "/usr/depot", "/usr/local/Cellar")
-      mvn_dirs <- dir(standard_paths, full.names = TRUE, pattern = mvn_pattern)
-    }
-  } else {
-    stop("Unsupported operating system.")
+  # if there is an options setting, use it
+  if (!is.null(.globals$which_mvn) &&
+      test_mvn(.globals$which_mvn)) {
+    return(.globals$which_mvn)
   }
 
-  # for each installation check for a /bin/mvn subdir
-  mvn <- mvn_dirs %>%
-    map_chr(append_subdir_if_present) %>%
-    na.omit() %>%
-    detect(test_mvn)
-
-  if (is.null(mvn))
-    warning("Unable to find mvn. Try setting options(maven.path = ...) or using install_mvn() to install")
-
-  return(mvn)
-}
-
-append_subdir_if_present <- function(path) {
-  if (dir.exists(path) && ("bin" %in% dir(path))) {
-    path <- file.path(path, "bin")
-    if ("mvn" %in% dir(path))
-      return(file.path(path, "mvn"))
-    else
-      return(NA_character_)
+  # try to find it automatically
+  mvn <- Sys.which("mvn")
+  if (nchar(mvn) > 0 &&
+      test_mvn(.globals$which_mvn)) {
+    return(mvn)
   }
-  return(path)
+
+  stop("Unable to find mvn. Try setting options(maven.path = ...) or using install_mvn() to install")
 }
 
 #' @rdname find_mvn
