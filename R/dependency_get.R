@@ -105,16 +105,16 @@ find_artifacts <- function(artifacts, resolve = FALSE, verbose = FALSE) {
     return()
 }
 
-find_artifact <- function(artrifact, resolve, verbose) {
+find_artifact <- function(artifact, resolve, verbose) {
   # pull dependency apart. this is necessary to support use cases where the group and
   # version inputs are missing
-  parsed_dep <- parse_dependency(artrifact)
+  parsed_dep <- parse_dependency(artifact)
   parsed_dep[c("groupid")] <- gsub("\\.", "/", parsed_dep[c("groupid")])
   path <- paste0(find_local_mvn_repo(), "/", paste0(parsed_dep, collapse="/"))
   if (!dir.exists(path)) {
     if (resolve) {
       get_dependencies(artifacts = artifact, transitive = TRUE, verbose = verbose)
-      find_artifact(artrifact = artrifact, resolve = FALSE, verbose = verbose)
+      find_artifact(artrifact = artifact, resolve = FALSE, verbose = verbose)
     }
     if (verbose) {
       warning(paste("Dependency not found in", path))

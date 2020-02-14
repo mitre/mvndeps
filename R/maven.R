@@ -168,7 +168,7 @@ execute_mvn_cmd <- function(args, cmd = .globals$which_mvn, check = TRUE) {
 parse_sys_return <- function(raw) {
   raw %>%
     rawToChar() %>%
-    strsplit(split = "\\n") %>%
+    strsplit(split = ifelse(is_windows(), "\\r\\n", "\\n")) %>%
     unlist() %>%
     return()
 }
