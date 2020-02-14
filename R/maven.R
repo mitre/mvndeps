@@ -166,7 +166,7 @@ execute_mvn_cmd <- function(args, cmd = .globals$which_mvn, check = TRUE) {
 #' @importFrom purrr %>% when
 #' @noRd
 parse_sys_return <- function(raw) {
-  parsed <- raw %>%
+  raw %>%
     rawToChar() %>%
     # deal with windows-style \r\n newline (mvn prints its own \n line, so on
     # windwows there is a fun mix of newline characters)
