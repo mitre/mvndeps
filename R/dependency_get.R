@@ -94,25 +94,32 @@ print_get_dependencies_messages <- function(artifact, sys_res, verbose) {
 #'
 #' @inheritParams get_dependencies
 #' @seealso \link{get_dependencies}
+#' @param resolve Logical. If \code{TRUE} use \code{get_dependencies} to resolve any requested
+#'   artifacts that are not found in the local maven repository.
 #' @importFrom purrr %>% map_chr
 #' @export
-find_artifacts <- function(artifacts, verbose = FALSE) {
+find_artifacts <- function(artifacts, resolve = FALSE, verbose = FALSE) {
 
   artifacts %>%
-    map_chr(find_artifact, verbose = verbose) %>%
+    map_chr(find_artifact, resolve = resolve, verbose = verbose) %>%
     return()
 }
 
-find_artifact <- function(artrifact, verbose) {
+find_artifact <- function(artrifact, resolve, verbose) {
   # pull dependency apart. this is necessary to support use cases where the group and
   # version inputs are missing
   parsed_dep <- parse_dependency(artrifact)
   parsed_dep[c("groupid")] <- gsub("\\.", "/", parsed_dep[c("groupid")])
   path <- paste0(find_local_mvn_repo(), "/", paste0(parsed_dep, collapse="/"))
   if (!dir.exists(path)) {
-    if (verbose)
+    if (resolve) {
+      get_dependencies(artifacts = artifact, transitive = TRUE, verbose = verbose)
+      find_artifact(artrifact = artrifact, resolve = FALSE, verbose = verbose)
+    }
+    if (verbose) {
       warning(paste("Dependency not found in", path))
-    path <- NULL
+    }
+    return(NULL)
   }
   # unconfigure_mvndeps(quiet=quiet)
   artifact_name <- paste0(parsed_dep["artifactid"], "-", parsed_dep["version"], ".jar")

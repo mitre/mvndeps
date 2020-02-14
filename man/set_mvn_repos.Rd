@@ -18,3 +18,10 @@ add_mvn_repos(repos, prepend = FALSE)
 \code{set_mvn_repos} will overwrite any existing repos and
 \code{add_mvn_repos} will append/prepend to existing.
 }
+\details{
+These repositories are only used by the \code{dependency:get} maven plugin, so they
+will be used when calling \code{\link{get_dependencies}} but not when calling
+\code{\link{build_classpath}} (which uses the \code{dependency:build-classpath} maven
+plugin under the hood). To set repositories for building classpaths it is necessary
+to update the maven settings.xml file. This is typically found in \code{~/.m2/settings.xml}.
+}

@@ -4,11 +4,14 @@
 \alias{find_artifacts}
 \title{Have maven find a dependency}
 \usage{
-find_artifacts(artifacts, verbose = FALSE)
+find_artifacts(artifacts, resolve = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{artifacts}{Character vector. Should be of the form 'groupId:artifactId:version[:packaging[:classifier]]'
 where the packaging and classifier inputs are optional.}
+
+\item{resolve}{Logical. If \code{TRUE} use \code{get_dependencies} to resolve any requested
+artifacts that are not found in the local maven repository.}
 
 \item{verbose}{Logical. Dump maven output to console.}
 }
