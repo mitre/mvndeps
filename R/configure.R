@@ -4,29 +4,17 @@
 .globals$local_repo <- getOption("maven.local.repo")
 .globals$dep_plugin_version <- getOption("maven.dependency.plugin.version") %||% "3.1.1"
 
-configure_mvndeps <- function(mvn, java_home, quiet=FALSE) {
-  # if (!missing(java_home))
-  #   set_java_home(java_home, quiet=quiet)
-  # if (Sys.getenv("JAVA_HOME")=="") {
-  #   set_java_home(quiet=quiet)
-  #   set_var("temp.java.home", TRUE)
-  # } else {
-  #   set_var("temp.java.home", FALSE)
-  # }
-}
-
-unconfigure_mvndeps <- function(quiet=FALSE) {
-  # if (get_var("temp.java.home")==TRUE) {
-  #   clear_java_home(quiet=quiet)
-  #   set_var("temp.java.home", FALSE)
-  # }
-}
-
 
 #' Set/Append Maven Artifact Repositories
 #'
 #' \code{set_mvn_repos} will overwrite any existing repos and
 #' \code{add_mvn_repos} will append/prepend to existing.
+#'
+#' These repositories are only used by the \code{dependency:get} maven plugin, so they
+#' will be used when calling \code{\link{get_dependencies}} but not when calling
+#' \code{\link{build_classpath}} (which uses the \code{dependency:build-classpath} maven
+#' plugin under the hood). To set repositories for building classpaths it is necessary
+#' to update the maven settings.xml file. This is typically found in \code{~/.m2/settings.xml}.
 #'
 #' @param repos Character vector. Should be maven repo URLs
 #' @param prepend Logical. If \code{TRUE} the new paths will come before the old.

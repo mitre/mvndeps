@@ -35,6 +35,9 @@ get_dependencies <- function(artifacts,
   if (is.null(dep_plugin_version))
     dep_plugin_version <- .globals$dep_plugin_version
 
+  if (is.null(remote_repos))
+    remote_repos <- .globals$mvn_repos
+
   results <- artifacts %>%
     map(.dependency_get_args,
         transitive = transitive,
