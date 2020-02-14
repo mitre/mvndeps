@@ -4,14 +4,12 @@
 \alias{.dependency_get_args}
 \title{Build the command to have maven download a dependency (package-private)}
 \usage{
-.dependency_get_args(artifact, transitive = TRUE, remote_repos = NULL,
-  dep_plugin_version)
-}
-\arguments{
-\item{transitive}{Logical. If \code{TRUE}, download transitively, retrieving the specified artifact and all of its dependencies.}
-
-\item{dep_plugin_version}{Character. The version of the maven dependency plugin. See https://github.com/apache/maven-dependency-plugin/releases
-for release versions.}
+.dependency_get_args(
+  artifact,
+  transitive = TRUE,
+  remote_repos = NULL,
+  dep_plugin_version
+)
 }
 \description{
 This function will build a system command using the maven dependency get funtionality to download a (java)

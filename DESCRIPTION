@@ -1,6 +1,6 @@
 Package: mvndeps
 Title: Use Maven to resolve dependencies
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: person("Matt", "Pollock", email = "mpollock@mitre.org", role = c("aut", "cre"))
 Description: Use existing maven install to resolve (mostly java) dependencies in
     R packages.
@@ -10,6 +10,6 @@ Imports: sys, purrr, rJava
 License: Apache License 2.0 | file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests: testthat
 BugReports: https://github.com/mitre/mvndeps/issues
