@@ -163,12 +163,16 @@ execute_mvn_cmd <- function(args, cmd = .globals$which_mvn, check = TRUE) {
            })
 }
 
-#' @importFrom purrr %>%
+#' @importFrom purrr %>% when
 #' @noRd
 parse_sys_return <- function(raw) {
-  raw %>%
+  parsed <- raw %>%
     rawToChar() %>%
-    strsplit(split = ifelse(is_windows(), "\\r\\n", "\\n")) %>%
+    # deal with windows-style \r\n newline (mvn prints its own \n line, so on
+    # windwows there is a fun mix of newline characters)
+    when( is_windows() ~ gsub(pattern = "\\r", replacement = "", x = .),
+         !is_windows() ~ .) %>%
+    strsplit(split = "\\n") %>%
     unlist() %>%
     return()
 }
