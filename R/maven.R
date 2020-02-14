@@ -20,7 +20,7 @@ find_mvn <- function() {
   # try to find it automatically
   mvn <- Sys.which("mvn")
   if (nchar(mvn) > 0 &&
-      test_mvn(.globals$which_mvn)) {
+      test_mvn(mvn)) {
     return(mvn)
   }
 
@@ -67,7 +67,7 @@ check_mvn <- function() {
   if (test_mvn(mvn))
     .globals$which_mvn <- mvn
   else
-    warning("Could not find Maven, see ?install_maven for help")
+    stop("Could not find Maven, see ?install_maven for help")
 }
 
 #' Test Maven
@@ -80,7 +80,7 @@ check_mvn <- function() {
 test_mvn <- function(mvn, verbose = FALSE) {
 
   args <- "-version"
-  res <- execute_mvn_cmd(cmd = mvn, args = args)
+  res <- execute_mvn_cmd(cmd = mvn, args = args, check = FALSE)
 
   if (verbose) {
     print_messages(res)
@@ -144,7 +144,11 @@ get_mvn_settings <- function() {
 #' @noRd
 #' @importFrom purrr %>%
 #' @importFrom sys exec_internal
-execute_mvn_cmd <- function(args, cmd = .globals$which_mvn) {
+execute_mvn_cmd <- function(args, cmd = .globals$which_mvn, check = TRUE) {
+
+  # make sure mvn is available
+  if (check)
+    check_mvn()
 
   # to support purrr pipelines need to be able to handle list args
   if (is.list(args))
